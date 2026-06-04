@@ -1,8 +1,8 @@
 class AiUsageMonitor < Formula
   desc "Native macOS menu-bar monitor for Claude/Codex/Antigravity usage"
   homepage "https://github.com/CarlLee1983/claude-context-statusline"
-  url "https://github.com/CarlLee1983/claude-context-statusline/archive/refs/tags/v0.3.0.tar.gz"
-  sha256 "1702fb9b1066720331be307da97db79ab72b8b17ab478646e16d8bb59e453ce2"
+  url "https://github.com/CarlLee1983/claude-context-statusline/archive/refs/tags/v0.3.1.tar.gz"
+  sha256 "05852f05824848bd6b4ebbb0619f6567e8743b8ba225311e891f78ee8998c2c1"
   license "MIT"
 
   depends_on xcode: ["16.0", :build]
@@ -12,6 +12,9 @@ class AiUsageMonitor < Formula
     cd "macos/AIUsageMonitor" do
       ENV["CONFIGURATION"] = "release"
       ENV["APP_VERSION"] = version.to_s
+      # swiftpm 的 manifest sandbox 在 brew 源碼安裝環境會 sandbox_apply 失敗，停用之。
+      # swiftpm's manifest sandbox fails (sandbox_apply) under brew's source build; disable it.
+      ENV["SWIFT_DISABLE_SANDBOX"] = "1"
       system "./Scripts/build-app.sh"
       prefix.install ".build/AIUsageMonitor.app"
     end
