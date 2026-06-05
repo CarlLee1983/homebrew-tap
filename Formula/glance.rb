@@ -11,10 +11,10 @@ class Glance < Formula
   depends_on :macos
 
   def install
-    # swiftpm 的 manifest sandbox 在 brew 源碼安裝環境會 sandbox_apply 失敗，停用之。
-    # swiftpm's manifest sandbox fails (sandbox_apply) under brew's source build; disable it.
-    ENV["SWIFT_DISABLE_SANDBOX"] = "1"
-    system "swift", "build", "-c", "release", "--product", "glance-cli"
+    # brew 自身的 sandbox-exec 內,swiftpm 會再套一層 manifest sandbox 導致
+    # sandbox_apply: Operation not permitted。用 --disable-sandbox 關閉 swiftpm 的沙箱。
+    # swiftpm nests its own sandbox inside brew's, which fails; --disable-sandbox avoids it.
+    system "swift", "build", "--disable-sandbox", "-c", "release", "--product", "glance-cli"
     bin.install ".build/release/glance-cli"
 
     system "xcodegen", "generate"
