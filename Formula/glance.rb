@@ -2,8 +2,8 @@ class Glance < Formula
   desc "Native macOS menu-bar system monitor with a companion CLI"
   homepage "https://github.com/CarlLee1983/Glance"
   url "https://github.com/CarlLee1983/Glance.git",
-      tag:      "v0.3.3",
-      revision: "2b736b8c88495bb6188e3b59ec50e733e7f80e9d"
+      tag:      "v0.3.4",
+      revision: "006e4e0e3409d003f2421dfd613603c3f85be1ab"
   license "MIT"
 
   depends_on xcode: ["16.0", :build]
