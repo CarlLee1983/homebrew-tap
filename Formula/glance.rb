@@ -2,31 +2,42 @@ class Glance < Formula
   desc "Native macOS menu-bar system monitor with a companion CLI"
   homepage "https://github.com/CarlLee1983/Glance"
   url "https://github.com/CarlLee1983/Glance.git",
-      tag:      "v0.3.1",
-      revision: "8d94eb16ee4d179b74b7f41026fd94afb7e74e18"
+      tag:      "v0.3.2",
+      revision: "237643a4ef03b13b8d3f24ddaf0281fe098df1a6"
   license "MIT"
 
   depends_on xcode: ["16.0", :build]
-  depends_on "xcodegen" => :build
   depends_on :macos
 
   def install
-    # brew 自身的 sandbox-exec 內,swiftpm 會再套一層 manifest sandbox 導致
-    # sandbox_apply: Operation not permitted。用 --disable-sandbox 關閉 swiftpm 的沙箱。
-    # swiftpm nests its own sandbox inside brew's, which fails; --disable-sandbox avoids it.
-    system "swift", "build", "--disable-sandbox", "-c", "release", "--product", "glance-cli"
+    # brew 自身的 sandbox-exec 內,swiftpm/xcodebuild 會再套一層 sandbox 導致
+    # sandbox_apply: Operation not permitted。改為純 swift build(--disable-sandbox)
+    # 編出 app 與 cli,再手動組成 .app bundle,完全避開 xcodebuild 解析套件的 nested sandbox。
+    # swiftpm/xcodebuild nest a sandbox inside brew's, which fails; build with
+    # --disable-sandbox and assemble the .app by hand to avoid it entirely.
+    system "swift", "build", "--disable-sandbox", "-c", "release"
     bin.install ".build/release/glance-cli"
 
-    system "xcodegen", "generate"
-    xcodebuild "-project", "Glance.xcodeproj",
-               "-scheme", "Glance",
-               "-configuration", "Release",
-               "-derivedDataPath", buildpath/".build/xcode-derived",
-               "CODE_SIGNING_ALLOWED=NO",
-               "CODE_SIGNING_REQUIRED=NO",
-               "CODE_SIGN_IDENTITY=-",
-               "build"
-    prefix.install ".build/xcode-derived/Build/Products/Release/Glance.app"
+    app = prefix/"Glance.app"
+    (app/"Contents/MacOS").mkpath
+    cp ".build/release/Glance", app/"Contents/MacOS/Glance"
+    (app/"Contents/Info.plist").write <<~PLIST
+      <?xml version="1.0" encoding="UTF-8"?>
+      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+      <plist version="1.0">
+      <dict>
+        <key>LSUIElement</key><true/>
+        <key>CFBundleExecutable</key><string>Glance</string>
+        <key>CFBundleName</key><string>Glance</string>
+        <key>CFBundleIdentifier</key><string>com.carl.glance</string>
+        <key>CFBundlePackageType</key><string>APPL</string>
+        <key>CFBundleShortVersionString</key><string>#{version}</string>
+        <key>CFBundleVersion</key><string>1</string>
+        <key>LSMinimumSystemVersion</key><string>14.0</string>
+        <key>NSHighResolutionCapable</key><true/>
+      </dict>
+      </plist>
+    PLIST
 
     (bin/"glance").write <<~EOS
       #!/bin/bash
