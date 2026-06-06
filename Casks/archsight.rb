@@ -25,14 +25,13 @@ cask "archsight" do
   ]
 
   caveats <<~EOS
-    ArchSight is currently ad-hoc signed and not notarized by Apple, so
-    Gatekeeper blocks the first launch. Install without the quarantine flag:
-
-      brew install --cask --no-quarantine archsight
-
-    If it was already installed the normal way, clear the flag once:
+    ArchSight is ad-hoc signed and not notarized by Apple, so Gatekeeper
+    blocks the first launch. After installing, clear the quarantine flag once:
 
       xattr -dr com.apple.quarantine "#{appdir}/ArchSight.app"
+
+    (Or open it the first time via right-click > Open, or via
+    System Settings > Privacy & Security > "Open Anyway".)
 
     Symbol navigation uses optional language servers, discovered lazily and
     never required to open or browse code:
