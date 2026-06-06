@@ -2,8 +2,7 @@ cask "archsight" do
   version "0.1.0"
   sha256 "54cdb7d3630ae4d9daed7916d9855a663c7c8495c071d5463f9e291e0659167b"
 
-  url "https://github.com/CarlLee1983/ArchSight/releases/download/v#{version}/ArchSight-#{version}.zip",
-      verified: "github.com/CarlLee1983/ArchSight/"
+  url "https://github.com/CarlLee1983/ArchSight/releases/download/v#{version}/ArchSight-#{version}.zip"
   name "ArchSight"
   desc "Read-only source-code observation tool for senior engineers"
   homepage "https://github.com/CarlLee1983/ArchSight"
