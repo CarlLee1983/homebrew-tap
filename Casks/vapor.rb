@@ -1,9 +1,9 @@
 cask "vapor" do
   arch arm: "aarch64", intel: "x64"
 
-  version "0.2.0"
-  sha256 arm:   "cef02e1b739b8fb79aeb089c1e5acc4a4dffbae8a31de8f67d091a26fd5b59ef",
-         intel: "a958ce2335f85fb92edcb7a9b17c554fadbdd3bbdb02febe7824da6aa64e3b9f"
+  version "0.3.0"
+  sha256 arm:   "93fe442c7a3090a25d5cb74a4885039fc26c138b41a16a537a2257d1e2a91efe",
+         intel: "eda82fd2aa5bd4c0b5389e3ab8c51344bf88524667b9052e4aa331c1bca10626"
 
   url "https://github.com/CarlLee1983/Vapor/releases/download/v#{version}/Vapor_#{version}_#{arch}.dmg"
   name "Vapor"
