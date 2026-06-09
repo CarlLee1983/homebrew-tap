@@ -19,6 +19,16 @@ cask "vapor-git" do
 
   app "Vapor.app"
 
+  # Vapor is only ad-hoc signed (no Apple Developer ID / notarization), so on
+  # Apple Silicon + recent macOS a quarantined build is reported as "damaged"
+  # with no "Open Anyway" path. Strip the quarantine flag on install so the
+  # app launches normally. The app installs under the user-owned appdir, so no
+  # sudo is required.
+  postflight do
+    system_command "/usr/bin/xattr",
+                   args: ["-dr", "com.apple.quarantine", "#{appdir}/Vapor.app"]
+  end
+
   zap trash: [
     "~/Library/Application Support/com.vapor.app",
     "~/Library/Caches/com.vapor.app",
@@ -28,13 +38,11 @@ cask "vapor-git" do
   ]
 
   caveats <<~EOS
-    Vapor is ad-hoc signed and not notarized by Apple, so Gatekeeper
-    blocks the first launch. After installing, clear the quarantine flag once:
+    Vapor is ad-hoc signed and not notarized by Apple. This cask clears the
+    quarantine flag on install so it launches normally; you should not see a
+    Gatekeeper "damaged" prompt. If macOS ever still blocks it, run:
 
       xattr -dr com.apple.quarantine "#{appdir}/Vapor.app"
-
-    (Or open it the first time via System Settings > Privacy & Security >
-    "Open Anyway".)
 
     Vapor wraps the system `git`; make sure `git` is installed and on PATH.
   EOS
