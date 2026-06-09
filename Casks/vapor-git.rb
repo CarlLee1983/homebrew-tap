@@ -1,4 +1,4 @@
-cask "vapor" do
+cask "vapor-git" do
   arch arm: "aarch64", intel: "x64"
 
   version "0.3.0"
