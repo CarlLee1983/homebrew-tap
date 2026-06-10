@@ -1,9 +1,9 @@
 cask "vapor-git" do
   arch arm: "aarch64", intel: "x64"
 
-  version "0.3.1"
-  sha256 arm:   "76c1f6ba9e9eb072ef8749fe082592f5d0f821344977f011cb8777b0701bc070",
-         intel: "7c38b7683c3caa1df6bb843c421eaa13877173ff8dbbeabbb4d65bc96755a8a5"
+  version "0.4.0"
+  sha256 arm:   "866ca847e2e7f4ef2dcc6ee7b952c69d72de3d5a250a25ef31b393c0b84cc873",
+         intel: "7b2b6234926030b5025dce9debacdef07aa2fed095210f045bd356831a185668"
 
   url "https://github.com/CarlLee1983/Vapor/releases/download/v#{version}/Vapor_#{version}_#{arch}.dmg"
   name "Vapor"
