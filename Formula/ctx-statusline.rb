@@ -1,8 +1,8 @@
 class CtxStatusline < Formula
   desc "Claude Code statusline showing context-window usage"
   homepage "https://github.com/CarlLee1983/claude-context-statusline"
-  url "https://github.com/CarlLee1983/claude-context-statusline/archive/refs/tags/v0.4.2.tar.gz"
-  sha256 "3ed0d59feb54d5d777a5b3fc46cbc121559992a4080043fa9371b4a3c51dc32f"
+  url "https://github.com/CarlLee1983/claude-context-statusline/archive/refs/tags/v0.5.0.tar.gz"
+  sha256 "81bc86fd629310ffca06aecb11ed85bcf9aa0c922646847688aab8a908ebe109"
   license "MIT"
 
   def install
