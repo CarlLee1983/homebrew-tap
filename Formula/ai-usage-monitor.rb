@@ -1,8 +1,8 @@
 class AiUsageMonitor < Formula
   desc "Native macOS menu-bar monitor for Claude/Codex/Antigravity usage"
   homepage "https://github.com/CarlLee1983/claude-context-statusline"
-  url "https://github.com/CarlLee1983/claude-context-statusline/archive/refs/tags/v0.6.0.tar.gz"
-  sha256 "a95b09b49c7320d3363425f844caf4fb1297af5ae5244f9c2ea386cd52823fbc"
+  url "https://github.com/CarlLee1983/claude-context-statusline/archive/refs/tags/v0.6.1.tar.gz"
+  sha256 "26c03a5e69d7fe97d09ba77205b02749df1bee0570a3c4e047df558e42fa641f"
   license "MIT"
 
   depends_on xcode: ["16.0", :build]
